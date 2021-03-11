@@ -29,9 +29,13 @@ class meta():
             self.archs[-1].num_decks = int(re.findall("\(.*\)", text)[0][1:-1])
 
             # Find deck colors
-            color_string = found_archetype.find("span", class_ = "manacost").attrs['aria-label']
-            color_string = color_string[8:].split(" ")
-            self.archs[-1].colors = color_string
+            color_string = found_archetype.find("span", class_ = "manacost")
+            if(color_string):
+                color_string = color_string.attrs['aria-label']
+                color_string = color_string[8:].split(" ")
+                self.archs[-1].colors = color_string
+            else:
+                self.archs[-1].colors = []
 
             # Find
             # print('----------')
@@ -74,4 +78,5 @@ class arch:
         # Ensures most important values are non-defualt
         pass
 
-M = meta('standard')
+M = meta('commander')
+M.pie_meta(10)
